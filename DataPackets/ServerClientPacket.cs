@@ -32,6 +32,11 @@ namespace DataPackets
         {
             return this.sourceIP.ToString() + "," + this.destinationIP.ToString() + this.numberOfPackets + "," + this.dataLength;
         }
+
+        public string ToPrintable()
+        {
+            return "Packet:\n" + "Source IP Address: " + this.sourceIP.ToString() + "\nDestination IP Address: " + this.destinationIP.ToString() + "\nNumber of Packets: " + this.numberOfPackets + "\nLength of the Payload: " + this.dataLength + "\n";
+        }
     }
 
     public class WeatherData
@@ -93,7 +98,44 @@ namespace DataPackets
             this.humidity = Double.Parse(humidity);
             this.visibility = int.Parse(visibility);
             this.windSpeed = Double.Parse(windSpeed);
-            this.windDirection = windDirection;
+
+            // Computing the Cardinal Direction by the degrees given
+            double windDir = double.Parse(windDirection);
+            if (windDir > 348.75 && windDir <= 11.25)
+                this.windDirection = "North";
+            else if (windDir > 11.25 && windDir <= 33.75)
+                this.windDirection = "North-North-East";
+            else if (windDir > 33.75 && windDir <= 56.25)
+                this.windDirection = "North-East";
+            else if (windDir > 56.25 && windDir <= 78.75)
+                this.windDirection = "East-North-East";
+            else if (windDir > 78.75 && windDir <= 101.25)
+                this.windDirection = "East";
+            else if (windDir > 101.25 && windDir <= 123.75)
+                this.windDirection = "East-South-East";
+            else if (windDir > 123.75 && windDir <= 146.25)
+                this.windDirection = "South-East";
+            else if (windDir > 146.25 && windDir <= 168.75)
+                this.windDirection = "South-South-East";
+            else if (windDir > 168.75 && windDir <= 191.25)
+                this.windDirection = "South";
+            else if (windDir > 191.25 && windDir <= 213.75)
+                this.windDirection = "South-South-West";
+            else if (windDir > 213.75 && windDir <= 236.25)
+                this.windDirection = "South-West";
+            else if (windDir > 236.25 && windDir <= 258.75)
+                this.windDirection = "West-South-West";
+            else if (windDir > 258.75 && windDir <= 281.25)
+                this.windDirection = "West";
+            else if (windDir > 281.25 && windDir <= 303.75)
+                this.windDirection = "West-North-West";
+            else if (windDir > 303.75 && windDir <= 326.25)
+                this.windDirection = "North-West";
+            else if (windDir > 326.25 && windDir <= 348.75)
+                this.windDirection = "North-North-West";
+            else
+                this.windDirection = "Undefined";
+
             this.timezoneFromUTC = int.Parse(timezoneFromUTC);
 
             TimeSpan sunriseTS = TimeSpan.FromSeconds(int.Parse(sunrise) - this.timezoneFromUTC);
@@ -105,7 +147,12 @@ namespace DataPackets
 
         public override string ToString()
         {
-            return weatherType + "," + temperature + "," + temperatureFeelsLike + "," + pressure + "," + humidity + "," + visibility + "," + windSpeed + "," + windDirection + "," + sunrise + "," + sunset + "," + timezoneFromUTC;
+            return this.weatherType + "," + this.temperature + "," + this.temperatureFeelsLike + "," + this.pressure + "," + this.humidity + "," + this.visibility + "," + this.windSpeed + "," + this.windDirection + "," + this.sunrise + "," + this.sunset + "," + this.timezoneFromUTC;
+        }
+
+        public string ToPrintable()
+        {
+            return "Weather Data:\n" + "Weather Type: " + this.weatherType + "\nTemperature: " + this.temperature + "°C\nFeels Like: " + this.temperatureFeelsLike + "°C\nPressure: " + this.pressure + " hPa\nHumidity: " + this.humidity + "%\nVisibility: " + this.visibility + "%\nWind Speed: " + this.windSpeed + " km/h\n" + this.windDirection + "\nSunrise Time: " + this.sunrise + "\nSunset Time: " + this.sunset + "\n";
         }
     }
 
@@ -139,6 +186,11 @@ namespace DataPackets
         public string SerializeData()
         {
             return this.head.ToString() + "," + this.data.ToString();
+        }
+
+        public string ToPrintable()
+        {
+            return "Printing the whole Server -> Client Packet: \n" + this.head.ToPrintable() + this.data.ToPrintable();
         }
     }
 }
