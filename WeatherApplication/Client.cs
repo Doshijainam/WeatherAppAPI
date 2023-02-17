@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace WeatherApplication
 {
-    internal static class Program
+    internal static class Client
     {
         /// <summary>
         /// The main entry point for the application.
