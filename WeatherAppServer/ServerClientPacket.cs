@@ -30,7 +30,7 @@ namespace DataPackets
 
         public override string ToString()
         {
-            return this.sourceIP.ToString() + "," + this.destinationIP.ToString() + this.numberOfPackets + "," + this.dataLength;
+            return this.sourceIP.ToString() + "," + this.destinationIP.ToString() + "," + this.numberOfPackets + "," + this.dataLength;
         }
 
         public string ToPrintable()
@@ -152,14 +152,14 @@ namespace DataPackets
 
         public string ToPrintable()
         {
-            return "Weather Data:\n" + "Weather Type: " + this.weatherType + "\nTemperature: " + this.temperature + "°C\nFeels Like: " + this.temperatureFeelsLike + "°C\nPressure: " + this.pressure + " hPa\nHumidity: " + this.humidity + "%\nVisibility: " + this.visibility + "%\nWind Speed: " + this.windSpeed + " km/h\n" + this.windDirection + "\nSunrise Time: " + this.sunrise + "\nSunset Time: " + this.sunset + "\n";
+            return "Weather Data:\n" + "Weather Type: " + this.weatherType + "\nTemperature: " + this.temperature + "°C\nFeels Like: " + this.temperatureFeelsLike + "°C\nPressure: " + this.pressure + " hPa\nHumidity: " + this.humidity + "%\nVisibility: " + this.visibility + "%\nWind Speed: " + this.windSpeed + " km/h\nWind Direction: " + this.windDirection + "\nSunrise Time: " + this.sunrise + "\nSunset Time: " + this.sunset + "\n";
         }
     }
 
     public class ServerClientPacket
     {
-        Head head;
-        WeatherData data;
+        public Head head;
+        public WeatherData data;
 
         public ServerClientPacket()
         {
