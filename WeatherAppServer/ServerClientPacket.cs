@@ -101,7 +101,7 @@ namespace DataPackets
 
             // Computing the Cardinal Direction by the degrees given
             double windDir = double.Parse(windDirection);
-            if (windDir > 348.75 && windDir <= 11.25)
+            if ((windDir > 348.75 && windDir <= 360) || (windDir >= 0 && windDir <= 11.25))
                 this.windDirection = "North";
             else if (windDir > 11.25 && windDir <= 33.75)
                 this.windDirection = "North-North-East";

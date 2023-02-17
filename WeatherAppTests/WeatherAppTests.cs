@@ -129,5 +129,132 @@ namespace WeatherAppTests
 
             Assert.AreEqual(expected, scp.ToPrintable());
         }
+
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionN1()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "355", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("North", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionN2()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "9.5", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("North", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionNNE()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "15.5", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("North-North-East", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionNE()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "45.5", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("North-East", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionENE()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "72.35", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("East-North-East", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionE()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "90", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("East", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionESE()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "105", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("East-South-East", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionSE()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "135.95", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("South-East", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionSSE()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "160", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("South-South-East", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionS()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "180", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("South", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionSSW()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "195", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("South-South-West", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionSW()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "220", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("South-West", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionWSW()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "245", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("West-South-West", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionW()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "270", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("West", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionWNW()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "282", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("West-North-West", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionNW()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "315", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("North-West", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionNNW()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "345", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("North-North-West", data.windDirection);
+        }
+        [TestMethod]
+        public void ServerClientPacketCardinalDirectionUnd()
+        {
+            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "-5", "1594353335", "1594412149", "3600");
+
+            Assert.AreEqual("Undefined", data.windDirection);
+        }
     }
 }
