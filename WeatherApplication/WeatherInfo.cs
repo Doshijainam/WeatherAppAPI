@@ -34,6 +34,7 @@ namespace WeatherApplication
         public class wind
         {
             double speed { get; set; }
+            
         }
 
         public class sys
