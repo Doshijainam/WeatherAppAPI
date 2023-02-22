@@ -28,6 +28,10 @@ namespace WeatherApplication
         {
            // string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0} & appid= {1}",textBox1.Text,APIkey );
            string url = "https://api.openweathermap.org/data/2.5/weather?q=" +textBox1.Text  "&appid = " + APIkey; 
+            string URL = "https://api.openweathermap.org/data/2.5/weather?q=" + textBox1.Text + "&appid=" + APIkey;
+            string url = string.Format(URL);
+
+
 
         }
     }
