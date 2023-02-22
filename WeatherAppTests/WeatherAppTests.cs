@@ -257,4 +257,35 @@ namespace WeatherAppTests
             Assert.AreEqual("Undefined", data.windDirection);
         }
     }
+
+    [TestClass]
+    public class ServerTests
+    {
+        [TestMethod]
+        public void ServerTest1 ()
+        {
+
+        }
+    }
+
+    [TestClass]
+    public class ClientTests
+    {
+        [TestMethod]
+        public void ClientTest1()
+        {
+
+        }
+    }
+
+
+    [TestClass]
+    public class APITests
+    {
+        [TestMethod]
+        public void APITest1()
+        {
+
+        }
+    }
 }

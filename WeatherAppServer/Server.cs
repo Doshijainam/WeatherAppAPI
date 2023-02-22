@@ -1,10 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System.Net.Sockets;
 
-using System.Net.Sockets;
+namespace WeatherAppServer
+{
+    internal static class Server
+    {
+        // TODO: Launch the server here
 
+        // TODO: Loop with functionality here
 
-
-class SimpleClient {
-    
+        // TODO: Shut down server here
+    }
 }
-Console.WriteLine("Hello, World!");

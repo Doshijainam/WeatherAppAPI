@@ -14,9 +14,14 @@ namespace WeatherApplication
         [STAThread]
         public static void Main()
         {
+
+            // TODO: Connect to the server here
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+            // TODO: Drop server connection here
         }
     }
 }
