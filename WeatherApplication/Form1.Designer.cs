@@ -32,12 +32,13 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labConditions = new System.Windows.Forms.Label();
+            this.labelDetails = new System.Windows.Forms.Label();
+            this.labSun = new System.Windows.Forms.Label();
+            this.labSunset = new System.Windows.Forms.Label();
+            this.labelWindSpeed = new System.Windows.Forms.Label();
+            this.labPressure = new System.Windows.Forms.Label();
+            this.labelWeather = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,71 +76,81 @@
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
-            // label2
+            // labConditions
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(101, 206);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 20);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Condition";
+            this.labConditions.AutoSize = true;
+            this.labConditions.Location = new System.Drawing.Point(101, 206);
+            this.labConditions.Name = "labConditions";
+            this.labConditions.Size = new System.Drawing.Size(76, 20);
+            this.labConditions.TabIndex = 4;
+            this.labConditions.Text = "Condition";
             // 
-            // label3
+            // labelDetails
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(101, 253);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 20);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Details";
+            this.labelDetails.AutoSize = true;
+            this.labelDetails.Location = new System.Drawing.Point(101, 253);
+            this.labelDetails.Name = "labelDetails";
+            this.labelDetails.Size = new System.Drawing.Size(58, 20);
+            this.labelDetails.TabIndex = 5;
+            this.labelDetails.Text = "Details";
             // 
-            // label4
+            // labSun
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(101, 297);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 20);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Sunrise";
+            this.labSun.AutoSize = true;
+            this.labSun.Location = new System.Drawing.Point(101, 297);
+            this.labSun.Name = "labSun";
+            this.labSun.Size = new System.Drawing.Size(63, 20);
+            this.labSun.TabIndex = 6;
+            this.labSun.Text = "Sunrise";
             // 
-            // label5
+            // labSunset
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(101, 343);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 20);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Sunset";
+            this.labSunset.AutoSize = true;
+            this.labSunset.Location = new System.Drawing.Point(101, 343);
+            this.labSunset.Name = "labSunset";
+            this.labSunset.Size = new System.Drawing.Size(60, 20);
+            this.labSunset.TabIndex = 7;
+            this.labSunset.Text = "Sunset";
             // 
-            // label6
+            // labelWindSpeed
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(375, 215);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(96, 20);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Wind Speed";
+            this.labelWindSpeed.AutoSize = true;
+            this.labelWindSpeed.Location = new System.Drawing.Point(375, 215);
+            this.labelWindSpeed.Name = "labelWindSpeed";
+            this.labelWindSpeed.Size = new System.Drawing.Size(96, 20);
+            this.labelWindSpeed.TabIndex = 8;
+            this.labelWindSpeed.Text = "Wind Speed";
             // 
-            // label7
+            // labPressure
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(375, 263);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 20);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Pressure";
+            this.labPressure.AutoSize = true;
+            this.labPressure.Location = new System.Drawing.Point(375, 263);
+            this.labPressure.Name = "labPressure";
+            this.labPressure.Size = new System.Drawing.Size(72, 20);
+            this.labPressure.TabIndex = 9;
+            this.labPressure.Text = "Pressure";
+            // 
+            // labelWeather
+            // 
+            this.labelWeather.AutoSize = true;
+            this.labelWeather.Location = new System.Drawing.Point(375, 308);
+            this.labelWeather.Name = "labelWeather";
+            this.labelWeather.Size = new System.Drawing.Size(104, 20);
+            this.labelWeather.TabIndex = 10;
+            this.labelWeather.Text = "Temperature ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelWeather);
+            this.Controls.Add(this.labPressure);
+            this.Controls.Add(this.labelWindSpeed);
+            this.Controls.Add(this.labSunset);
+            this.Controls.Add(this.labSun);
+            this.Controls.Add(this.labelDetails);
+            this.Controls.Add(this.labConditions);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
@@ -159,12 +170,13 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labConditions;
+        private System.Windows.Forms.Label labelDetails;
+        private System.Windows.Forms.Label labSun;
+        private System.Windows.Forms.Label labSunset;
+        private System.Windows.Forms.Label labelWindSpeed;
+        private System.Windows.Forms.Label labPressure;
+        private System.Windows.Forms.Label labelWeather;
     }
 }
 
