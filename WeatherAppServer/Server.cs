@@ -1,10 +1,17 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net;
+using System.Net.Sockets;
+
 
 namespace WeatherAppServer
 {
     internal static class Server
     {
-        // TODO: Launch the server here
+        public static void Main ()
+        {
+            _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.ReuseAddress, true);
+            _socket.Bind(new IPEndPoint(IPAddress.Parse(address), port));
+        }
 
         // TODO: Loop with functionality here
 
