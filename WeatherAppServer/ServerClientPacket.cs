@@ -160,6 +160,7 @@ namespace DataPackets
     {
         public Head head;
         public WeatherData data;
+       
 
         public ServerClientPacket()
         {
@@ -178,7 +179,7 @@ namespace DataPackets
         }
         public ServerClientPacket(string stingPkt)
         {
-            string[] splitStringPkt = stingPkt.Split(',');
+            string [] splitStringPkt = stingPkt.Split(',');
             this.head = new Head(splitStringPkt[0], splitStringPkt[1], int.Parse(splitStringPkt[2]), int.Parse(splitStringPkt[3]));
             this.data = new WeatherData(splitStringPkt[4], splitStringPkt[5], splitStringPkt[6], splitStringPkt[7], splitStringPkt[8], splitStringPkt[9], splitStringPkt[10], splitStringPkt[11], splitStringPkt[12], splitStringPkt[13], splitStringPkt[14]);
         }
