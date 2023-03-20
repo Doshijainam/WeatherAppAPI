@@ -13,8 +13,10 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 
-
+using WeatherApplication;
+namespace DataPackets;
 
 class Server
 {
@@ -31,13 +33,15 @@ class Server
 
         string message = Encoding.ASCII.GetString(data, 0, bytesReceived);
         //Console.WriteLine("Received message: " + message);
+        
 
         using (WebClient web = new WebClient())
         {
             string APIkey = "b353092d473f54c232544798a31178f3";
             string URL = "https://api.openweathermap.org/data/2.5/weather?q=" +message +"&appid=" + APIkey;
             string url = string.Format(URL);
-            var json = web.DownloadString(url);
+            string json = web.DownloadString(url);
+           
             byte[] clientMsg = Encoding.UTF8.GetBytes(json);
 
             server.SendTo(clientMsg, remoteEP); //Problem

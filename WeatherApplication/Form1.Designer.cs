@@ -39,6 +39,7 @@
             this.labelWindSpeed = new System.Windows.Forms.Label();
             this.labPressure = new System.Windows.Forms.Label();
             this.labelWeather = new System.Windows.Forms.Label();
+            this.Exit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -143,11 +144,22 @@
             this.labelWeather.TabIndex = 10;
             this.labelWeather.Text = "Temperature ";
             // 
+            // Exit
+            // 
+            this.Exit.Location = new System.Drawing.Point(624, 325);
+            this.Exit.Name = "Exit";
+            this.Exit.Size = new System.Drawing.Size(75, 23);
+            this.Exit.TabIndex = 11;
+            this.Exit.Text = "Exit";
+            this.Exit.UseVisualStyleBackColor = true;
+            this.Exit.Click += new System.EventHandler(this.Exit_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(711, 360);
+            this.Controls.Add(this.Exit);
             this.Controls.Add(this.labelWeather);
             this.Controls.Add(this.labPressure);
             this.Controls.Add(this.labelWindSpeed);
@@ -182,6 +194,7 @@
         private System.Windows.Forms.Label labelWindSpeed;
         private System.Windows.Forms.Label labPressure;
         private System.Windows.Forms.Label labelWeather;
+        private System.Windows.Forms.Button Exit;
     }
 }
 

@@ -6,6 +6,7 @@ using System.IO.MemoryMappedFiles;
 using System.IO.Pipes;
 using System.Threading;
 using Newtonsoft.Json;
+
 class Client
 {
     public static void Main(string[] args)
@@ -31,19 +32,27 @@ class Client
             EndPoint ep = new IPEndPoint(IPAddress.Any, 0);
 
             int bytesReceived = client.ReceiveFrom(buffer, ref ep);
-            string json = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
-            var obj = JsonConvert.DeserializeObject(json);
+             string json = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
 
-            var sendBack = JsonConvert.SerializeObject(obj);
+             var obj = JsonConvert.DeserializeObject(json);
 
-            using (var pipe = new NamedPipeClientStream("my-pipe"))
-            {
-                pipe.Connect();
-                using (var writer = new StreamWriter(pipe))
-                {
-                    writer.WriteLine(json);
-                }
-            }
+             var sendBack = JsonConvert.SerializeObject(obj);
+
+             using (var pipe = new NamedPipeClientStream("my-pipe"))
+             {
+                 pipe.Connect();
+                 using (var writer = new StreamWriter(pipe))
+                 {
+                     writer.WriteLine(json);
+                 }
+             }
+
+           
+
+
+
+
+
 
 
         }
