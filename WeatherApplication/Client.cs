@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WeatherApplication
 {
     internal static class Client
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+
+        public const int listenPort = 22000;
+
         [STAThread]
         public static void Main()
         {
@@ -21,15 +17,36 @@ namespace WeatherApplication
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPAddress ip = IPAddress.Parse("192.168.1.255");
-            IPEndPoint ep = new IPEndPoint(ip, 11000);
+            UdpClient listener = new UdpClient(listenPort);
+            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
 
-            // TODO : Get the user choice of the city here
-            /*string uInput;
-             * 
-             * TODO : Then put it into the packet and send to the server once serialized
-            s.SendTo(uInput, ep);*/
+            try
+            {
+                while (true)
+                {
+                    // TODO : Get the user choice of the city here
+                    /*string uInput;
+                     * 
+                     * TODO : Then put it into the packet and send to the server once serialized
+                    s.SendTo(uInput, ep);*/
+
+                    // Receiving a response here as a byte array or a char* pointer
+                    byte[] bytes = listener.Receive(ref groupEP);
+
+                    // Process the data here to form a data packet.
+                    // Print out the data to form.
+                }
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                listener.Close();
+            }
+
+            
 
             // TODO : Receive the server response and decode it into the DataPacket class
 
