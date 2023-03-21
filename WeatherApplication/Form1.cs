@@ -37,6 +37,7 @@ namespace WeatherApplication
         public void button1_Click(object sender, EventArgs e)
         {
             sendCityNameToClient();
+            
             getResponse();
             textBox1.Text = "";
 
@@ -48,6 +49,7 @@ namespace WeatherApplication
             serverStream.Write(buffer, 0, buffer.Length);
         }
 
+
         public void getResponse()
         {
             using (var pipe = new NamedPipeServerStream("my-pipe"))
@@ -56,8 +58,8 @@ namespace WeatherApplication
                 using (var reader = new StreamReader(pipe))
                 {
                     
-                    string json = reader.ReadLine();
-                    WeatherInfo.root Info = JsonConvert.DeserializeObject<WeatherInfo.root>(json);
+                    string clientDataPacketResponse = reader.ReadLine();
+                    WeatherInfo.root Info = JsonConvert.DeserializeObject<WeatherInfo.root>(clientDataPacketResponse);
 
                     labConditions.Text = Info.weather[0].main;
                      labSunset.Text = Info.sys.sunset.ToString();
@@ -82,6 +84,11 @@ namespace WeatherApplication
             {
                 Application.Exit();
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

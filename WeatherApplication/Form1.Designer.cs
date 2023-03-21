@@ -46,15 +46,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(140, 42);
+            this.label1.Location = new System.Drawing.Point(172, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 16);
+            this.label1.Size = new System.Drawing.Size(113, 16);
             this.label1.TabIndex = 0;
-            this.label1.Text = "City";
+            this.label1.Text = "City,Country Code";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(206, 39);
+            this.textBox1.Location = new System.Drawing.Point(291, 21);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(118, 22);
@@ -63,7 +63,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(396, 37);
+            this.button1.Location = new System.Drawing.Point(461, 21);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(67, 26);

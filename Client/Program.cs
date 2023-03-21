@@ -11,6 +11,7 @@ class Client
 {
     public static void Main(string[] args)
     {
+        
 
         //Thread.Sleep(5000);
         Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -22,11 +23,15 @@ class Client
             clientStream.Connect();
 
             byte[] buffer = new byte[1024];
-            int bytesRead = clientStream.Read(buffer, 0, buffer.Length);
+                int bytesRead = 0;
+                bytesRead = clientStream.Read(buffer, 0, buffer.Length);
 
-            string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-            byte[] serverMessage = Encoding.ASCII.GetBytes(message);
-            client.SendTo(serverMessage, remoteEP);
+
+                string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                byte[] serverMessage = Encoding.ASCII.GetBytes(message);
+                client.SendTo(serverMessage, remoteEP);
+            
+            
 
             byte[] serverResponse = new byte[1024];
             EndPoint ep = new IPEndPoint(IPAddress.Any, 0);
@@ -47,11 +52,7 @@ class Client
                  }
              }
 
-           
-
-
-
-
+            
 
 
 

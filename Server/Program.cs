@@ -29,24 +29,31 @@ class Server
 
         byte[] data = new byte[1024];
         EndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
-        int bytesReceived = server.ReceiveFrom(data, ref remoteEP);
 
-        string message = Encoding.ASCII.GetString(data, 0, bytesReceived);
-        //Console.WriteLine("Received message: " + message);
+ 
         
+            int bytesReceived = 0;
+            bytesReceived = server.ReceiveFrom(data, ref remoteEP);
 
-        using (WebClient web = new WebClient())
-        {
-            string APIkey = "b353092d473f54c232544798a31178f3";
-            string URL = "https://api.openweathermap.org/data/2.5/weather?q=" +message +"&appid=" + APIkey;
-            string url = string.Format(URL);
-            string json = web.DownloadString(url);
-           
+
+            string message = Encoding.ASCII.GetString(data, 0, bytesReceived);
+            //Console.WriteLine("Received message: " + message);
+            
+
+            using (WebClient web = new WebClient())
+            {
+                string APIkey = "b353092d473f54c232544798a31178f3";
+                string URL = "https://api.openweathermap.org/data/2.5/weather?q=" + message + "&appid=" + APIkey;
+                string url = string.Format(URL);
+                string json = web.DownloadString(url);
             byte[] clientMsg = Encoding.UTF8.GetBytes(json);
 
-            server.SendTo(clientMsg, remoteEP); //Problem
+            server.SendTo(clientMsg, remoteEP); 
+
 
         }
+        }
+        
 
         
 
@@ -55,5 +62,5 @@ class Server
    
 
     
-}
+
 
