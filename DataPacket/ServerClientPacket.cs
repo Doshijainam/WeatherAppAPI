@@ -34,7 +34,7 @@ namespace DataPacket
             this.fin = '0';
         }
 
-        unsafe public Head(char* ptr) 
+        /*unsafe public Head(char* ptr) 
         {
             fixed (char* destPtr = &destination)
             {
@@ -60,7 +60,7 @@ namespace DataPacket
             {
                 Buffer.MemoryCopy(ptr + Marshal.SizeOf(destination) + Marshal.SizeOf(source) + Marshal.SizeOf(numberOfPackets) + Marshal.SizeOf(dataLength) + Marshal.SizeOf(err), finPtr, Marshal.SizeOf(fin), Marshal.SizeOf(fin));
             }
-        }
+        }*/
 
         public void setDataLength (int length)
         {
@@ -169,14 +169,12 @@ namespace DataPacket
             this.data = new(apiResponse);
         }
 
-        unsafe public ServerClientPacket(char* buff)
+        /*unsafe public ServerClientPacket(char* buff)
         {
             head = new(buff);
 
-            //data = new(buff, head.SizeOf());
-
-            data = new();
-        }
+            data = new(buff, head.SizeOf());
+        }*/
 
         public void SetErr(bool error)
         {
