@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 
 struct weather
@@ -256,6 +257,35 @@ namespace DataPacket
             this.sunset = sunsetTS.ToString(@"hh\:mm");
         } */
 
+        public WeatherData (byte[] buffer, int headSize)
+        {
+            string[] bufferParsed = (Encoding.ASCII.GetString(buffer)).Split(",");
+
+            Weather.description = bufferParsed[++headSize];
+
+            Info.temp = Double.Parse(bufferParsed[++headSize]);
+            Info.feels_like = Double.Parse(bufferParsed[++headSize]);
+            Info.temp_min = Double.Parse(bufferParsed[++headSize]);
+            Info.temp_max = Double.Parse(bufferParsed[++headSize]);
+            Info.pressure = Double.Parse(bufferParsed[++headSize]);
+            Info.humidity = Double.Parse(bufferParsed[++headSize]);
+
+            Wind.speed = Double.Parse(bufferParsed[++headSize]);
+            Wind.deg = Double.Parse(bufferParsed[++headSize]);
+
+            this.windDirection = DefineWindDirection();
+
+            SystemData.sunrise = int.Parse(bufferParsed[++headSize]);
+            SystemData.sunset = int.Parse(bufferParsed[++headSize]);
+            SystemData.timezoneFromUTC = int.Parse(bufferParsed[++headSize]);
+
+            TimeSpan sunriseTS = TimeSpan.FromSeconds(SystemData.sunrise - SystemData.timezoneFromUTC);
+            this.sunrise = sunriseTS.ToString(@"hh\:mm");
+
+            TimeSpan sunsetTS = TimeSpan.FromSeconds(SystemData.sunset - SystemData.timezoneFromUTC);
+            this.sunset = sunsetTS.ToString(@"hh\:mm");
+        }
+
         public string DefineWindDirection()
         {
             string windDir;
@@ -295,11 +325,6 @@ namespace DataPacket
                 windDir= "Undefined";
 
             return windDir;
-        }
-
-        public string ToSerializedString ()
-        {
-            return Weather.description + Info.temp + Info.feels_like + Info.temp_min + Info.temp_max + Info.pressure + Info.humidity + Wind.speed + Wind.deg + SystemData.sunrise + SystemData.sunset + SystemData.timezoneFromUTC;
         }
 
         public override string ToString()

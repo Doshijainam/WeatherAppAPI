@@ -2,6 +2,8 @@
 using System.Net.Sockets;
 using System.Net;
 using System.Windows.Forms;
+using System.Text;
+using DataPacket;
 
 namespace WeatherApplication
 {
@@ -25,15 +27,13 @@ namespace WeatherApplication
                 while (true)
                 {
                     // TODO : Get the user choice of the city here
-                    /*string uInput;
-                     * 
-                     * TODO : Then put it into the packet and send to the server once serialized
-                    s.SendTo(uInput, ep);*/
+                    string uInput = "Toronto";
+                     
 
-                    // Receiving a response here as a byte array or a char* pointer
-                    byte[] bytes = listener.Receive(ref groupEP);
+                    // server.SendTo(Encoding.ASCII.GetBytes(uInput), groupEP);
 
-                    // Process the data here to form a data packet.
+                    ServerClientPacket packet = new ServerClientPacket(listener.Receive(ref groupEP));
+
                     // Print out the data to form.
                 }
             }
@@ -45,12 +45,6 @@ namespace WeatherApplication
             {
                 listener.Close();
             }
-
-            
-
-            // TODO : Receive the server response and decode it into the DataPacket class
-
-            // TODO : Print stuff to the form
         }
     }
 }
