@@ -60,6 +60,7 @@ namespace WeatherApplication
                     
                     string clientDataPacketResponse = reader.ReadLine();
                     WeatherInfo.root Info = JsonConvert.DeserializeObject<WeatherInfo.root>(clientDataPacketResponse);
+                   
 
                     labConditions.Text = Info.weather[0].main;
                      labSunset.Text = Info.sys.sunset.ToString();
