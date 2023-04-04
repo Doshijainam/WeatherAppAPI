@@ -14,48 +14,42 @@ namespace WeatherAppServer
 
         static void Main(string[] args)
         {
-            // Reusing Jainam's Server Settings from here:
+            // TODO: Need to loop this functionality to loop the server and allow to accept new connections later on.
 
             Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPEndPoint localEP = new IPEndPoint(IPAddress.Any, listenPort);
-            server.Bind(localEP);
+            IPAddress destination = IPAddress.Parse("192.168.1.255");
 
-            EndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
+            string city = "";
+            // Take in the city from the form here
 
-            // To here <-
+            string apiRequest = API_URL;
+            string apiQuery = "?q=" + city + API_KEY;
 
-            bool run = true;
-            while (run)
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(apiRequest);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync(apiQuery).Result;
+
+            ServerClientPacket packet = new();
+
+            if (response.IsSuccessStatusCode)
             {
-                byte[] cityBuff = new byte[1024];
-                server.ReceiveFrom(cityBuff, ref remoteEP);
-                string city = Encoding.ASCII.GetString(cityBuff);
+                string apiResponse;
+                apiResponse = response.Content.ReadAsStringAsync().Result;
 
-                string apiRequest = API_URL;
-                string apiQuery = "?q=" + city + API_KEY;
-
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(apiRequest);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = client.GetAsync(apiQuery).Result;
-
-                ServerClientPacket packet = new();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string apiResponse;
-                    apiResponse = response.Content.ReadAsStringAsync().Result;
-
-                    packet = new(apiResponse);
-                }
-                else
-                {
-                    packet.SetErr(true);
-                }
-
-                server.SendTo(packet.SerializeData(), remoteEP);
+                packet = new(apiResponse);
             }
+            else
+            {
+                packet.SetErr(true);
+            }
+
+            // Need to serialize the data in a real way, now just sending a string converted to an array of bytes 
+            IPEndPoint recvAddr = new IPEndPoint(destination, listenPort);
+
+            // Sending a serialized data here in form of a pointer. 
+            // server.SendTo(packet.SerializeData(), recvAddr);
         }
     }
 }
