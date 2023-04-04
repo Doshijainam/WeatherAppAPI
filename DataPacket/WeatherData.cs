@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 
 struct weather
@@ -163,7 +164,7 @@ namespace DataPacket
                     "cod": 200
                 }
             */
-            
+
             string[] delimeters = { "{\"", "\":{\"", "\":", ",\"", "},\"", "\":[{\"", "\":\"", "\",\"" };
 
             string[] words = apiResponse.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
@@ -256,50 +257,74 @@ namespace DataPacket
             this.sunset = sunsetTS.ToString(@"hh\:mm");
         } */
 
+        public WeatherData(byte[] buffer, int headSize)
+        {
+            string[] bufferParsed = (Encoding.ASCII.GetString(buffer)).Split(",");
+
+            Weather.description = bufferParsed[++headSize];
+
+            Info.temp = Double.Parse(bufferParsed[++headSize]);
+            Info.feels_like = Double.Parse(bufferParsed[++headSize]);
+            Info.temp_min = Double.Parse(bufferParsed[++headSize]);
+            Info.temp_max = Double.Parse(bufferParsed[++headSize]);
+            Info.pressure = Double.Parse(bufferParsed[++headSize]);
+            Info.humidity = Double.Parse(bufferParsed[++headSize]);
+
+            Wind.speed = Double.Parse(bufferParsed[++headSize]);
+            Wind.deg = Double.Parse(bufferParsed[++headSize]);
+
+            this.windDirection = DefineWindDirection();
+
+            SystemData.sunrise = int.Parse(bufferParsed[++headSize]);
+            SystemData.sunset = int.Parse(bufferParsed[++headSize]);
+            SystemData.timezoneFromUTC = int.Parse(bufferParsed[++headSize]);
+
+            TimeSpan sunriseTS = TimeSpan.FromSeconds(SystemData.sunrise - SystemData.timezoneFromUTC);
+            this.sunrise = sunriseTS.ToString(@"hh\:mm");
+
+            TimeSpan sunsetTS = TimeSpan.FromSeconds(SystemData.sunset - SystemData.timezoneFromUTC);
+            this.sunset = sunsetTS.ToString(@"hh\:mm");
+        }
+
         public string DefineWindDirection()
         {
             string windDir;
             if ((Wind.deg > 348.75 && Wind.deg <= 360) || (Wind.deg >= 0 && Wind.deg <= 11.25))
-                windDir= "North";
+                windDir = "North";
             else if (Wind.deg > 11.25 && Wind.deg <= 33.75)
-                windDir= "North-North-East";
+                windDir = "North-North-East";
             else if (Wind.deg > 33.75 && Wind.deg <= 56.25)
-                windDir= "North-East";
+                windDir = "North-East";
             else if (Wind.deg > 56.25 && Wind.deg <= 78.75)
-                windDir= "East-North-East";
+                windDir = "East-North-East";
             else if (Wind.deg > 78.75 && Wind.deg <= 101.25)
-                windDir= "East";
+                windDir = "East";
             else if (Wind.deg > 101.25 && Wind.deg <= 123.75)
-                windDir= "East-South-East";
+                windDir = "East-South-East";
             else if (Wind.deg > 123.75 && Wind.deg <= 146.25)
-                windDir= "South-East";
+                windDir = "South-East";
             else if (Wind.deg > 146.25 && Wind.deg <= 168.75)
-                windDir= "South-South-East";
+                windDir = "South-South-East";
             else if (Wind.deg > 168.75 && Wind.deg <= 191.25)
-                windDir= "South";
+                windDir = "South";
             else if (Wind.deg > 191.25 && Wind.deg <= 213.75)
-                windDir= "South-South-West";
+                windDir = "South-South-West";
             else if (Wind.deg > 213.75 && Wind.deg <= 236.25)
-                windDir= "South-West";
+                windDir = "South-West";
             else if (Wind.deg > 236.25 && Wind.deg <= 258.75)
-                windDir= "West-South-West";
+                windDir = "West-South-West";
             else if (Wind.deg > 258.75 && Wind.deg <= 281.25)
-                windDir= "West";
+                windDir = "West";
             else if (Wind.deg > 281.25 && Wind.deg <= 303.75)
-                windDir= "West-North-West";
+                windDir = "West-North-West";
             else if (Wind.deg > 303.75 && Wind.deg <= 326.25)
-                windDir= "North-West";
+                windDir = "North-West";
             else if (Wind.deg > 326.25 && Wind.deg <= 348.75)
-                windDir= "North-North-West";
+                windDir = "North-North-West";
             else
-                windDir= "Undefined";
+                windDir = "Undefined";
 
             return windDir;
-        }
-
-        public string ToSerializedString ()
-        {
-            return Weather.description + Info.temp + Info.feels_like + Info.temp_min + Info.temp_max + Info.pressure + Info.humidity + Wind.speed + Wind.deg + SystemData.sunrise + SystemData.sunset + SystemData.timezoneFromUTC;
         }
 
         public override string ToString()

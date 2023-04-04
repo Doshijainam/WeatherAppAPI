@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace DataPacket
 {
@@ -34,6 +36,22 @@ namespace DataPacket
             this.fin = '0';
         }
 
+        public Head(byte[] str)
+        {
+            string[] bufferSplit = (Encoding.ASCII.GetString(str)).Split(",");
+
+            int i = 0;
+
+            this.destination = (bufferSplit[i].ToCharArray())[0];
+            this.source = (bufferSplit[++i].ToCharArray())[0];
+
+            this.numberOfPackets = int.Parse(bufferSplit[++i]);
+            this.dataLength = int.Parse(bufferSplit[++i]);
+
+            this.err = (bufferSplit[++i].ToCharArray())[0];
+            this.fin = (bufferSplit[++i].ToCharArray())[0];
+        }
+
         /*unsafe public Head(char* ptr) 
         {
             fixed (char* destPtr = &destination)
@@ -62,14 +80,14 @@ namespace DataPacket
             }
         }*/
 
-        public void setDataLength (int length)
+        public void setDataLength(int length)
         {
             this.dataLength = length;
         }
 
-        public void SetErr (bool error)
+        public void SetErr(bool error)
         {
-            if(error)
+            if (error)
             {
                 this.err = '1';
             }
@@ -96,28 +114,9 @@ namespace DataPacket
             return Marshal.SizeOf(destination) + Marshal.SizeOf(source) + Marshal.SizeOf(numberOfPackets) + Marshal.SizeOf(dataLength) + Marshal.SizeOf(err) + Marshal.SizeOf(fin);
         }
 
-        public string ToSerializedString ()
-        {
-            return "" + this.destination + this.source + this.numberOfPackets + this.dataLength + this.err + this.fin;
-        }
-
         public override string ToString()
         {
-            string dest;
-            string src;
-            switch(this.destination)
-            {
-                case 'c': dest = "Client"; break;
-                case 's': dest = "Server"; break;
-                default: dest = "Undefined"; break;
-            }
-            switch(this.source)
-            {
-                case 'c': src = "Client"; break;
-                case 's': src = "Server"; break;
-                default: src = "Undefined"; break;
-            }
-            return dest + "," + src + "," + this.numberOfPackets + "," + this.dataLength + "," + this.err + "," + this.fin;
+            return this.destination + "," + this.source + "," + this.numberOfPackets + "," + this.dataLength + "," + this.err + "," + this.fin;
         }
 
         public string ToPrintable()
@@ -142,10 +141,10 @@ namespace DataPacket
 
     public class ServerClientPacket
     {
+        const int HEAD_MEMBERS = 6;
+
         private Head head;
         private WeatherData data;
-
-        private byte[] serializedBuff = new byte[0];
 
         public ServerClientPacket()
         {
@@ -169,6 +168,12 @@ namespace DataPacket
             this.data = new(apiResponse);
         }
 
+        public ServerClientPacket(byte[] str)
+        {
+            head = new Head(str);
+            data = new WeatherData(str, HEAD_MEMBERS);
+        }
+
         /*unsafe public ServerClientPacket(char* buff)
         {
             head = new(buff);
@@ -186,13 +191,9 @@ namespace DataPacket
             head.SetFin(finish);
         }
 
-        unsafe public char* SerializeData()
+        unsafe public byte[] SerializeData()
         {
-            char[] buff = (head.ToSerializedString() + data.ToSerializedString()).ToCharArray();
-
-            fixed (char* buffPtr = &buff[0])
-
-            return buffPtr;
+            return Encoding.ASCII.GetBytes(head.ToString() + "," + data.ToString());
         }
 
         public string ToPrintable()
