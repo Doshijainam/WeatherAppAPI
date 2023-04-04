@@ -1,23 +1,27 @@
-﻿using System;
 using System.Net.Sockets;
 using System.Net;
+using System;
 using System.Windows.Forms;
 using System.Text;
 using DataPacket;
 
-namespace WeatherApplication
+namespace WeatherApp
 {
-    internal static class Client
+    internal static class Program
     {
 
         public const int listenPort = 22000;
 
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
         [STAThread]
-        public static void Main()
+        static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            Application.Run(new ClientGUI());
 
             UdpClient listener = new UdpClient(listenPort);
             IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
