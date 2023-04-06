@@ -29,6 +29,7 @@ namespace WeatherApp
             // TODO : Get the user choice of the city here
             string uInput = "Toronto";
 
+            // Just sending the CITY NAME HERE
             using (UdpClient sender = new UdpClient(listenPort))
                 sender.Send(Encoding.ASCII.GetBytes(uInput), listenPort);
 
@@ -37,9 +38,10 @@ namespace WeatherApp
             UdpClient receiver = new UdpClient(listenPort);
             IPEndPoint senderEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), listenPort);
 
+            // Initializing the packet with the data we got back from the server.
             ServerClientPacket packet = new ServerClientPacket(receiver.Receive(ref senderEP));
 
-            // Print out the data to form.
+            // Print out the data to form (now just prints to console.
             Console.WriteLine(packet.ToPrintable());
 
         }

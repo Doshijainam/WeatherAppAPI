@@ -21,8 +21,11 @@ namespace WeatherAppServer
             bool run = true;
             while (run)
             {
+                // Getting the city name here from the client
                 byte[] cityBuff = server.Receive(ref receiveEP);
                 string city = Encoding.ASCII.GetString(cityBuff);
+
+                // Sending the API rquest and initializing packet with the response.
 
                 string apiRequest = API_URL;
                 string apiQuery = "?q=" + city + API_KEY;
@@ -46,6 +49,8 @@ namespace WeatherAppServer
                 {
                     packet.SetErr(true);
                 }
+
+                // Sending the data back to the client.
 
                 server.Send(packet.SerializeData(), packet.SerializeData().Length);
             }
