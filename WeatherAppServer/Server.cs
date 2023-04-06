@@ -14,21 +14,14 @@ namespace WeatherAppServer
 
         static void Main(string[] args)
         {
-            // Reusing Jainam's Server Settings from here:
 
-            Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPEndPoint localEP = new IPEndPoint(IPAddress.Any, listenPort);
-            server.Bind(localEP);
-
-            EndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
-
-            // To here <-
+            UdpClient server = new UdpClient(listenPort);
+            IPEndPoint receiveEP = new IPEndPoint(IPAddress.Any, 0);
 
             bool run = true;
             while (run)
             {
-                byte[] cityBuff = new byte[1024];
-                server.ReceiveFrom(cityBuff, ref remoteEP);
+                byte[] cityBuff = server.Receive(ref receiveEP);
                 string city = Encoding.ASCII.GetString(cityBuff);
 
                 string apiRequest = API_URL;
@@ -54,7 +47,7 @@ namespace WeatherAppServer
                     packet.SetErr(true);
                 }
 
-                server.SendTo(packet.SerializeData(), remoteEP);
+                server.Send(packet.SerializeData(), packet.SerializeData().Length);
             }
         }
     }

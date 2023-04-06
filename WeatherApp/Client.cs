@@ -4,6 +4,7 @@ using System;
 using System.Windows.Forms;
 using System.Text;
 using DataPacket;
+using System.IO.Pipes;
 
 namespace WeatherApp
 {
@@ -23,32 +24,24 @@ namespace WeatherApp
             ApplicationConfiguration.Initialize();
             Application.Run(new ClientGUI());
 
-            UdpClient listener = new UdpClient(listenPort);
-            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
-
-            try
-            {
-                while (true)
-                {
-                    // TODO : Get the user choice of the city here
-                    string uInput = "Toronto";
 
 
-                    // server.SendTo(Encoding.ASCII.GetBytes(uInput), groupEP);
+            // TODO : Get the user choice of the city here
+            string uInput = "Toronto";
 
-                    ServerClientPacket packet = new ServerClientPacket(listener.Receive(ref groupEP));
+            using (UdpClient sender = new UdpClient(listenPort))
+                sender.Send(Encoding.ASCII.GetBytes(uInput), listenPort);
 
-                    // Print out the data to form.
-                }
-            }
-            catch (SocketException e)
-            {
-                Console.WriteLine(e);
-            }
-            finally
-            {
-                listener.Close();
-            }
+            // Now the receiving part 
+
+            UdpClient receiver = new UdpClient(listenPort);
+            IPEndPoint senderEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), listenPort);
+
+            ServerClientPacket packet = new ServerClientPacket(receiver.Receive(ref senderEP));
+
+            // Print out the data to form.
+            Console.WriteLine(packet.ToPrintable());
+
         }
     }
 }
