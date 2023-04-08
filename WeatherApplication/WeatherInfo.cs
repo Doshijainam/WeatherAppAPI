@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace WeatherApplication
 {
-    class WeatherInfo
+    [Serializable]
+    public class WeatherInfo
     {
+
+        [Serializable]
         public class coord
         {
             public double lon { get; set; }
            public  double lat { get; set; }
 
         }
+        [Serializable]
         public class weather
         {
             public string main { get; set; }
@@ -22,7 +26,7 @@ namespace WeatherApplication
             public string icon { get; set; }
 
         }
-
+        [Serializable]
         public class main
         {
 
@@ -31,18 +35,23 @@ namespace WeatherApplication
             public double humidity { get; set; }
 
         }
-
+        [Serializable]
         public class wind
         {
             public double speed { get; set; }
         }
-
+        [Serializable]
+        public class clouds
+        {
+            public int all { get; set; }
+        }
+        [Serializable]
         public class sys
         {
             public long sunrise { get; set; }
             public long sunset { get; set; }
         }
-
+        [Serializable]
         public class root
         {
             public coord coord { get; set; }
