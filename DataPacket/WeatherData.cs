@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 
-struct weather
+public struct weather
 {
     // Weather condition description (like: Clouds, Broken Clouds, etc.)
     public string description { get; set; }
 };
-struct main_info
+public struct main_info
 {
     // Weather Data including:
     // //Temperature (temp)
@@ -25,14 +25,14 @@ struct main_info
     // Humidity (humidity)
     public double humidity { get; set; }
 };
-struct wind
+public struct wind
 {
     // Wind Speed in m/s
     public double speed { get; set; }
     // Wind Direction in degrees from 0 to 360
     public double deg { get; set; }
 };
-struct sys
+public struct sys
 {
     // Sunrise time in seconds
     public int sunrise { get; set; }
@@ -48,10 +48,10 @@ namespace DataPacket
     {
         public const double Kelvin = 273;
 
-        weather Weather;
-        main_info Info;
-        wind Wind;
-        sys SystemData;
+        public weather Weather;
+        public main_info Info;
+        public wind Wind;
+        public sys SystemData;
 
         // A container to store the human-readable wind direction
         public string windDirection { get; set; }
@@ -103,10 +103,10 @@ namespace DataPacket
             SystemData.sunset = sunset;
             SystemData.timezoneFromUTC = timezoneFromUTC;
 
-            TimeSpan sunriseTS = TimeSpan.FromSeconds(SystemData.sunrise - timezoneFromUTC);
+            TimeSpan sunriseTS = TimeSpan.FromSeconds(SystemData.sunrise + timezoneFromUTC);
             this.sunrise = sunriseTS.ToString(@"hh\:mm");
 
-            TimeSpan sunsetTS = TimeSpan.FromSeconds(SystemData.sunset - timezoneFromUTC);
+            TimeSpan sunsetTS = TimeSpan.FromSeconds(SystemData.sunset + timezoneFromUTC);
             this.sunset = sunsetTS.ToString(@"hh\:mm");
         }
 
@@ -220,10 +220,10 @@ namespace DataPacket
             SystemData.sunset = sunset;
             SystemData.timezoneFromUTC = timezoneFromUTC;
 
-            TimeSpan sunriseTS = TimeSpan.FromSeconds(SystemData.sunrise - timezoneFromUTC);
+            TimeSpan sunriseTS = TimeSpan.FromSeconds(SystemData.sunrise + timezoneFromUTC);
             this.sunrise = sunriseTS.ToString(@"hh\:mm");
 
-            TimeSpan sunsetTS = TimeSpan.FromSeconds(SystemData.sunset - timezoneFromUTC);
+            TimeSpan sunsetTS = TimeSpan.FromSeconds(SystemData.sunset + timezoneFromUTC);
             this.sunset = sunsetTS.ToString(@"hh\:mm");
         }
 
@@ -261,7 +261,7 @@ namespace DataPacket
         {
             string[] bufferParsed = (Encoding.ASCII.GetString(buffer)).Split(",");
 
-            Weather.description = bufferParsed[++headSize];
+            Weather.description = bufferParsed[headSize];
 
             Info.temp = Double.Parse(bufferParsed[++headSize]);
             Info.feels_like = Double.Parse(bufferParsed[++headSize]);
@@ -275,15 +275,8 @@ namespace DataPacket
 
             this.windDirection = DefineWindDirection();
 
-            SystemData.sunrise = int.Parse(bufferParsed[++headSize]);
-            SystemData.sunset = int.Parse(bufferParsed[++headSize]);
-            SystemData.timezoneFromUTC = int.Parse(bufferParsed[++headSize]);
-
-            TimeSpan sunriseTS = TimeSpan.FromSeconds(SystemData.sunrise - SystemData.timezoneFromUTC);
-            this.sunrise = sunriseTS.ToString(@"hh\:mm");
-
-            TimeSpan sunsetTS = TimeSpan.FromSeconds(SystemData.sunset - SystemData.timezoneFromUTC);
-            this.sunset = sunsetTS.ToString(@"hh\:mm");
+            this.sunrise = bufferParsed[++headSize];
+            this.sunset = bufferParsed[++headSize];
         }
 
         public string DefineWindDirection()
@@ -329,7 +322,7 @@ namespace DataPacket
 
         public override string ToString()
         {
-            return Weather.description + "," + Info.temp + "," + Info.feels_like + "," + Info.temp_min + "," + Info.temp_max + "," + Info.pressure + "," + Info.humidity + "," + Wind.speed + "," + Wind.deg + "," + this.windDirection + "," + SystemData.sunrise + "," + SystemData.sunset + "," + SystemData.timezoneFromUTC + "," + this.sunrise + "," + this.sunset;
+            return Weather.description + "," + Info.temp + "," + Info.feels_like + "," + Info.temp_min + "," + Info.temp_max + "," + Info.pressure + "," + Info.humidity + "," + Wind.speed + "," + Wind.deg + "," + this.sunrise + "," + this.sunset;
         }
 
         public string ToPrintable()

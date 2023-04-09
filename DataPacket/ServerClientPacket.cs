@@ -144,7 +144,7 @@ namespace DataPacket
         const int HEAD_MEMBERS = 6;
 
         private Head head;
-        private WeatherData data;
+        public WeatherData data;
 
         public ServerClientPacket()
         {
