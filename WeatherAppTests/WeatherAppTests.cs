@@ -1,116 +1,114 @@
-//using DataPackets;
+using DataPacket;
 
-//namespace WeatherAppTests
-//{
-//    [TestClass]
-//    public class DataPacketsTests
-//    {
-//        // Testing the Default Constructor for Server -> Client Data Packet
-//        [TestMethod]
-//        public void ServerClientPacketDefConstrTestHead()
-//        {
-//            Head head = new Head();
+namespace WeatherAppTests
+{
+    [TestClass]
+    public class DataPacketsTests
+    {
+        // Testing the Default Constructor for Server -> Client Data Packet
+        [TestMethod]
+        public void ServerClientPacketDefConstrTestHead()
+        {
+            Head head = new Head();
 
-//            ServerClientPacket scp = new ServerClientPacket();
+            ServerClientPacket scp = new ServerClientPacket();
 
-//            Assert.AreEqual(head.ToString(), scp.head.ToString());
-//        }
-//        [TestMethod]
-//        public void ServerClientPacketDefConstrTestData()
-//        {
-//            WeatherData data = new WeatherData();
+            Assert.AreEqual(head.ToString(), scp.head.ToString());
+        }
+        [TestMethod]
+        public void ServerClientPacketDefConstrTestData()
+        {
+            WeatherData data = new WeatherData();
+            ServerClientPacket scp = new ServerClientPacket();
 
-//            ServerClientPacket scp = new ServerClientPacket();
+            Assert.AreEqual(data.ToString(), scp.data.ToString());
+        }
+        // Testing the Custom Constructor #1 for Server -> Client Data Packet with empty fields
+        [TestMethod]
+        public void ServerClientPacketCustConstr1TestHeadE()
+        {
+            Head head = new Head();
+            WeatherData data = new WeatherData();
 
-//            Assert.AreEqual(data.ToString(), scp.data.ToString());
-//        }
-//        // Testing the Custom Constructor #1 for Server -> Client Data Packet with empty fields
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr1TestHeadE()
-//        {
-//            Head head = new Head();
-//            WeatherData data = new WeatherData();
+            ServerClientPacket scp = new ServerClientPacket(head, data);
 
-//            ServerClientPacket scp = new ServerClientPacket(head, data);
+            Assert.AreEqual(head.ToString(), scp.head.ToString());
+        }
+        [TestMethod]
+        public void ServerClientPacketCustConstr1TestDataE()
+        {
+            Head head = new Head();
+            WeatherData data = new WeatherData();
 
-//            Assert.AreEqual(head.ToString(), scp.head.ToString());
-//        }
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr1TestDataE()
-//        {
-//            Head head = new Head();
-//            WeatherData data = new WeatherData();
+            ServerClientPacket scp = new ServerClientPacket(head, data);
 
-//            ServerClientPacket scp = new ServerClientPacket(head, data);
+            Assert.AreEqual(data.ToString(), scp.data.ToString());
+        }
 
-//            Assert.AreEqual(data.ToString(), scp.data.ToString());
-//        }
+        // Testing the Custom Constructor #1 for Server -> Client Data Packet with non-empty fields
+        [TestMethod]
+        public void ServerClientPacketCustConstr1TestHeadF()
+        {
+            Head head = new Head('1', '0', 0, 12);
+            //string description, double temp, double feels_like, double temp_min, double temp_max, double pressure, double humidity, double speed, double deg, int sunrise, int sunset, int timezoneFromUTC
+            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 11, 15, 75, 78, 100, 22, 1594353335, 1594412149, 3600);
 
-//        // Testing the Custom Constructor #1 for Server -> Client Data Packet with non-empty fields
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr1TestHeadF()
-//        {
-//            Head head = new Head("10.0.0.1", "10.0.0.27", 15, 155);
-//            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 75, 78, 100, 22, "155", "1594353335", "1594412149", 3600);
+            ServerClientPacket scp = new ServerClientPacket(head, data);
 
-//            ServerClientPacket scp = new ServerClientPacket(head, data);
+            Assert.AreEqual(head.ToString(), scp.head.ToString());
+        }
+        [TestMethod]
+        public void ServerClientPacketCustConstr1TestDataF()
+        {
+            Head head = new Head('1', '0', 0, 12);
+            //string description, double temp, double feels_like, double temp_min, double temp_max, double pressure, double humidity, double speed, double deg, int sunrise, int sunset, int timezoneFromUTC
+            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 11, 15, 75, 78, 100, 22, 1594353335, 1594412149, 3600);
 
-//            Assert.AreEqual(head.ToString(), scp.head.ToString());
-//        }
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr1TestDataF()
-//        {
-//            Head head = new Head("10.0.0.1", "10.0.0.27", 15, 155);
-//            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 75, 78, 100, 22, "155", "1594353335", "1594412149", 3600);
+            ServerClientPacket scp = new ServerClientPacket(head, data);
 
-//            ServerClientPacket scp = new ServerClientPacket(head, data);
+            Assert.AreEqual(data.ToString(), scp.data.ToString());
+        }
 
-//            Assert.AreEqual(data.ToString(), scp.data.ToString());
-//        }
+        // Testing the Custom Constructor #2 for Server -> Client Data Packet with non-empty fields
+        [TestMethod]
+        public void ServerClientPacketCustConstr2TestHeadF()
+        {
+            Head head = new Head('1', '2', 15, 155);
+            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 11, 15, 75, 78, 100, 155, 1594353335, 1594412149, 3600);
 
-//        // Testing the Custom Constructor #2 for Server -> Client Data Packet with non-empty fields
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr2TestHeadF()
-//        {
-//            Head head = new Head("10.0.0.1", "10.0.0.27", 15, 155);
-//            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 75, 78, 100, 22, "155", "1594353335", "1594412149", 3600);
+            ServerClientPacket scp = new ServerClientPacket('1', '2', 15, 155, "Cloudy", 12.5, 11.25, 11, 15, 75, 78, 100, 155, 1594353335, 1594412149, 3600);
 
-//            ServerClientPacket scp = new ServerClientPacket("10.0.0.1", "10.0.0.27", 15, 155, "Cloudy", "12.5", "11.25", "75", "78", "100", "22", "155", "1594353335", "1594412149", "3600");
+            Assert.AreEqual(head.ToString(), scp.head.ToString());
+        }
+        [TestMethod]
+        public void ServerClientPacketCustConstr2TestDataF()
+        {
+            Head head = new Head('1', '2', 15, 155);
+            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 11, 15, 75, 78, 100, 155, 1594353335, 1594412149, 3600);
 
-//            Assert.AreEqual(head.ToString(), scp.head.ToString());
-//        }
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr2TestDataF()
-//        {
-//            Head head = new Head("10.0.0.1", "10.0.0.27", 15, 155);
-//            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 75, 78, 100, 22, "155", "1594353335", "1594412149", 3600);
+            ServerClientPacket scp = new ServerClientPacket('1', '2', 15, 155, "Cloudy", 12.5, 11.25, 11, 15, 75, 78, 100, 155, 1594353335, 1594412149, 3600);
 
-//            ServerClientPacket scp = new ServerClientPacket("10.0.0.1", "10.0.0.27", 15, 155, "Cloudy", "285.5", "284.25", "75", "78", "100", "22", "155", "1594353335", "1594412149", "3600");
+            Assert.AreEqual(data.ToString(), scp.data.ToString());
+        }
 
-//            Assert.AreEqual("Cloudy,12.5,11.25,75,78,100,22,South-South-East,02:55,19:15,3600", scp.data.ToString());
-//        }
+        // Testing the Custom Constructor #3 for Server -> Client Data Packet with non-empty fields
+        [TestMethod]
+        public void ServerClientPacketCustConstr3TestHeadF()
+        {
+            Head head = new();
+            ServerClientPacket scp = new ServerClientPacket("{\"coord\":{\"lon\":-79.4163,\"lat\":43.7001},\"weather\":[{\"id\":800,\"main\":\"Clear\",\"description\":\"clear sky\",\"icon\":\"01n\"}],\"base\":\"stations\",\"main\":{\"temp\":277.59,\"feels_like\":277.59,\"temp_min\":274.98,\"temp_max\":279.31,\"pressure\":1030,\"humidity\":60},\"visibility\":10000,\"wind\":{\"speed\":1.03,\"deg\":0},\"clouds\":{\"all\":0},\"dt\":1681095629,\"sys\":{\"type\":1,\"id\":718,\"country\":\"CA\",\"sunrise\":1681037119,\"sunset\":1681084370},\"timezone\":-14400,\"id\":6167865,\"name\":\"Toronto\",\"cod\":200}");
 
-//        // Testing the Custom Constructor #3 for Server -> Client Data Packet with non-empty fields
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr3TestHeadF()
-//        {
-//            Head head = new Head("10.0.0.1", "10.0.0.27", 15, 155);
-//            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 75, 78, 100, 22, "155", "1594353335", "1594412149", 3600);
+            Assert.AreEqual(head.ToString(), scp.head.ToString());
+        }
+        [TestMethod]
+        public void ServerClientPacketCustConstr3TestDataF()
+        {
+            WeatherData data = new WeatherData("\"clear sky", 2.59, 2.59, 1.98, 6.31, 1030, 60, 10000, 1.03, 1681037119, 1681084370, -14400);
 
-//            ServerClientPacket scp = new ServerClientPacket("10.0.0.1,10.0.0.27,15,155,Cloudy,285.5,284.25,75,78,100,22,155,1594353335,1594412149,3600");
+            ServerClientPacket scp = new ServerClientPacket("{\"coord\":{\"lon\":-79.4163,\"lat\":43.7001},\"weather\":[{\"id\":800,\"main\":\"Clear\",\"description\":\"clear sky\",\"icon\":\"01n\"}],\"base\":\"stations\",\"main\":{\"temp\":277.59,\"feels_like\":277.59,\"temp_min\":274.98,\"temp_max\":279.31,\"pressure\":1030,\"humidity\":60},\"visibility\":10000,\"wind\":{\"speed\":1.03,\"deg\":0},\"clouds\":{\"all\":0},\"dt\":1681095629,\"sys\":{\"type\":1,\"id\":718,\"country\":\"CA\",\"sunrise\":1681037119,\"sunset\":1681084370},\"timezone\":-14400,\"id\":6167865,\"name\":\"Toronto\",\"cod\":200}");
 
-//            Assert.AreEqual(head.ToString(), scp.head.ToString());
-//        }
-//        [TestMethod]
-//        public void ServerClientPacketCustConstr3TestDataF()
-//        {
-//            Head head = new Head("10.0.0.1", "10.0.0.27", 15, 155);
-//            WeatherData data = new WeatherData("Cloudy", 12.5, 11.25, 75, 78, 100, 22, "155", "1594353335", "1594412149", 3600);
-
-//            ServerClientPacket scp = new ServerClientPacket("10.0.0.1,10.0.0.27,15,155,Cloudy,285.5,284.25,75,78,100,22,155,1594353335,1594412149,3600");
-
-//            Assert.AreEqual("Cloudy,12.5,11.25,75,78,100,22,South-South-East,02:55,19:15,3600", scp.data.ToString());
-//        }
+            Assert.AreEqual(data.ToString(), scp.data.ToString());
+        }
 
 //        [TestMethod]
 //        public void ServerClientPacketSerializeDataTest()
@@ -253,9 +251,9 @@
 //        public void ServerClientPacketCardinalDirectionUnd()
 //        {
 //            WeatherData data = new WeatherData("Windy", "274.5", "270", "55", "59", "100", "25", "-5", "1594353335", "1594412149", "3600");
-
-            Assert.AreEqual("Undefined", data.windDirection);
-        }
+//
+//            Assert.AreEqual("Undefined", data.windDirection);
+//        }
     }
 
     [TestClass]
